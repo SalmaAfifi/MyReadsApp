@@ -6,19 +6,28 @@ import * as BooksAPI from './BooksAPI'
 
 
 class Search extends Component{
+
     state = {
         books:[]
     }
+    
+    shelfValue = (searchItem, existingBooks ) => {
+        const existing = existingBooks.filter(book=>book.id === searchItem.id)
+        if(existing.length>0){return existing[0].shelf}
+        else {return "none"}
+        }
+    
 
     searchUpdate = async(query) => {
         let books = []
         if(query.length>0) { books = await BooksAPI.search(query)}
         if("error" in books) {books = []}
         this.setState({books: books})
-        console.log(this.state.books)}
+        }
 
     render(){
-        const {onSelect} = this.props       
+        const {existingBooks, onSelect} = this.props
+        this.state.books.forEach((book)=>(book['shelf']=this.shelfValue(book,existingBooks )))       
     return (
         <div>
             <div className="search-books">

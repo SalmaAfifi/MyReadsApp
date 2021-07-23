@@ -1,9 +1,14 @@
 import React from 'react'
 
-function Shelf({book, onSelect}) {
+
+function Shelf({ book, onSelect}) {
+    
+    const selectValue = ("shelf" in book)?String(book['shelf']):"none"
+
     return (
+
         <div>
-                <select onChange={(event)=>onSelect(book, event.target.value)}>
+                <select value={selectValue} onChange={(event)=>onSelect(book, event.target.value)}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
